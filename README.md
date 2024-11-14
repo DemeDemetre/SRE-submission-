@@ -6,7 +6,7 @@ we need to install prometheus/grafana with Alertmanager and Prometheus blackbox 
 Add Prometheus Helm Repository
 Start by adding the Prometheus Community Helm repository to your environment:
 
-
+```bash
 # Add the Prometheus Helm repository
 helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
 helm repo update  # Update your Helm repository cache
@@ -15,7 +15,7 @@ helm repo update  # Update your Helm repository cache
 helm upgrade --install --atomic --wait --timeout=120s prometheus prometheus-community/prometheus -n test -f values.yaml
 helm install grafana grafana/grafana -n test
 helm install blackbox-exporter prometheus-community/prometheus-blackbox-exporter --namespace test 
-
+```
 
 
 ### 2.Second Step
