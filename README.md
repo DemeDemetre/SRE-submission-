@@ -78,6 +78,8 @@ We need to add Prometheus alerting Rules for https://api.nasa.gov/planetary/apod
               severity: "warning"
             annotations:
               summary: "High Memory Usage on Prometheus or Blackbox Exporter"
-              description: "The memory usage for Prometheus or Blackbox Exporter is above 80% for more than 5 minutes."  
- 
+              description: "The memory usage for Prometheus or Blackbox Exporter is above 80% for more than 5 minutes."
+```
+
+![s](https://github.com/user-attachments/assets/32b5ce14-0a0d-4cdd-95e2-809a0574f4ea)
 
