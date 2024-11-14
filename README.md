@@ -15,3 +15,7 @@ helm upgrade --install --atomic --wait --timeout=120s prometheus prometheus-comm
 helm install grafana grafana/grafana -n test
 helm install blackbox-exporter prometheus-community/prometheus-blackbox-exporter --namespace test
 
+# 2. Second Step
+After installing all three components we need to add Prometheuse as a datasource in Grafana
+
+ ![DataSource prometheus](https://github.com/user-attachments/assets/05987998-1d24-4eff-80b5-6d9c12af63ef)
