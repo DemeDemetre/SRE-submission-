@@ -128,7 +128,7 @@ alertmanager:
       - name: "slack-notifications"
         slack_configs:
           - send_resolved: true
-            api_url: "https://hooks.slack.com/services/T080R20PUN7/...."
+            api_url: "https://hooks.slack.com/services/T080R20PUN7/...." (slack webhook is covered)
             channel: "#prometheus-testing"
             username: "Prometheus Alert"
             title: "{{ .CommonAnnotations.summary }}"
@@ -142,6 +142,26 @@ alertmanager:
         equal: ["alertname", "job"]
 ```
 ![Alertmnager1](https://github.com/user-attachments/assets/44d6a84a-4bad-4729-8ab0-5871bcf2ec19)
+
+### 6. The sixth step
+check if prometheus can scrape metrics with promQL lenguage (see it in picture)
+![PromQL](https://github.com/user-attachments/assets/3cce6989-4069-4369-ae78-9e1bbbb3a4ef)
+
+
+### 7. The seventh step
+Upgrade Helm for Prometheus 
+```bash
+helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+```
+
+### 8. The eighth step
+check if slack channel is receiving notifications from alertmanager , we are simulating errors (Do not forget to crate webhook URL for your slack channel)
+
+![Slack-alerts on channel1](https://github.com/user-attachments/assets/8b754b44-5583-41ae-9aef-656a7e237cb5)
+
+
+
+
 
 
 
