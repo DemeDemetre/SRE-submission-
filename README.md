@@ -3,3 +3,10 @@ To ensure seamless performance and proactive alerting, we’ll set up robust mon
 
 # 1.First Step 
 we need to install prometheus/grafana with Alertmanager and Prometheus blackbox exporter in order to take metrics form external API
+Add Prometheus Helm Repository
+Start by adding the Prometheus Community Helm repository to your environment:
+
+```bash
+# Add the Prometheus Helm repository
+helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+helm repo update  # Update your Helm repository cache
