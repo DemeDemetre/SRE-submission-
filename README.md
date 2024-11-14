@@ -22,3 +22,62 @@ helm install blackbox-exporter prometheus-community/prometheus-blackbox-exporter
 After installing all three components we need to add Prometheuse as a datasource in Grafana
 ![DataSource prometheus](https://github.com/user-attachments/assets/68ca9056-9025-4857-9bf3-43d4925eb1e5)
 
+### 3. The third step
+We need to add Prometheus alerting Rules for https://api.nasa.gov/planetary/apod?api_key=H2L2Xew086YQlXrkgIpA9ilmQAFJduFPgBMfmCwH API
+```yaml
+ #Prometheus rules:
+
+ serverFiles:
+  ## Alerts configuration
+  ## Ref: https://prometheus.io/docs/prometheus/latest/configuration/alerting_rules/
+  alerting_rules.yml:
+    groups:
+      - name: nasa_api_alerts
+        rules:
+         #1 Instance down 
+          - alert: NASAApiDown
+            expr: probe_success{job="nasa_api"} == 0
+            for: 1m
+            labels:
+              severity: "critical"
+            annotations:
+              description: "NASA API has been unreachable for more than 1 minutes."
+              summary: "NASA API is down"
+          # 2. Alert for High Response Time
+          - alert: NASAApiHighResponseTime
+            expr: probe_duration_seconds{job="nasa_api"} > 1
+            for: 1m
+            labels:
+              severity: "warning"
+            annotations:
+              summary: "High response time for NASA API"
+              description: "NASA API response time is above 1 second for more than 1 minutes."
+          # 3. Alert for High Error Rate
+          - alert: NASAApiErrorRate
+            expr: probe_success{job="nasa_api"} == 0
+            for: 1m
+            labels:
+              severity: "critical"
+            annotations:
+              summary: "High Error Rate for NASA API"
+              description: "The NASA API is currently returning errors. It has been unreachable for more than 1 minute."
+          # 4. Alert for High Utilization of Prometheus or Blackbox Exporter (as proxy)
+          - alert: HighCpuUsage
+            expr: rate(container_cpu_usage_seconds_total{pod=~"prometheus.*|blackbox-exporter.*"}[1m]) > 0.8
+            for: 1m
+            labels:
+              severity: "warning"
+            annotations:
+              summary: "High CPU Usage on Prometheus or Blackbox Exporter"
+              description: "The CPU usage for Prometheus or Blackbox Exporter is above 80% for more than 1 minutes."
+
+          - alert: HighMemoryUsage
+            expr: container_memory_usage_bytes{pod=~"prometheus.*|blackbox-exporter.*"} / container_spec_memory_limit_bytes{pod=~"prometheus.*|blackbox-exporter.*"} > 0.8
+            for: 5m
+            labels:
+              severity: "warning"
+            annotations:
+              summary: "High Memory Usage on Prometheus or Blackbox Exporter"
+              description: "The memory usage for Prometheus or Blackbox Exporter is above 80% for more than 5 minutes."  
+ 
+
