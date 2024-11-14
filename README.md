@@ -23,7 +23,7 @@ After installing all three components we need to add Prometheuse as a datasource
 ![DataSource prometheus](https://github.com/user-attachments/assets/68ca9056-9025-4857-9bf3-43d4925eb1e5)
 
 ### 3. The third step
-We need to add Prometheus alerting Rules for https://api.nasa.gov/planetary/apod?api_key=H2L2Xew086YQlXrkgIpA9ilmQAFJduFPgBMfmCwH API
+We need to add Prometheus alerting Rules in Helm Value for https://api.nasa.gov/planetary/apod?api_key=H2L2Xew086YQlXrkgIpA9ilmQAFJduFPgBMfmCwH API
 ```yaml
  #Prometheus rules:
 
@@ -82,4 +82,27 @@ We need to add Prometheus alerting Rules for https://api.nasa.gov/planetary/apod
 ```
 
 ![s](https://github.com/user-attachments/assets/32b5ce14-0a0d-4cdd-95e2-809a0574f4ea)
+
+### 4. The fourth step
+We need to add Prometheus Blackbox configuration in Helm value  in order to collect metrics from external API https://api.nasa.gov/planetary/apod?api_key=H2L2Xew086YQlXrkgIpA9ilmQAFJduFPgBMfmCwH
+```yaml
+#Prometheus  blackbox rule
+
+extraScrapeConfigs: |
+  - job_name: "nasa_api"
+    metrics_path: /probe
+    params:
+      module: [http_2xx]
+    static_configs:
+      - targets:
+          - https://api.nasa.gov/planetary/apod?api_key=H2L2Xew086YQlXrkgIpA9ilmQAFJduFPgBMfmCwH
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: blackbox-exporter-prometheus-blackbox-exporter.test.svc.cluster.local:9115
+```
+
 
