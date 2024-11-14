@@ -155,7 +155,7 @@ helm repo add prometheus-community https://prometheus-community.github.io/helm-c
 ```
 
 ### 8. The eighth step
-check if slack channel is receiving notifications from alertmanager , we are simulating errors (Do not forget to crate webhook URL for your slack channel)
+check if slack channel is receiving notifications from alertmanager . we are simulating errors by not defining resource limits and requests in blackbox container so it gose  infinit look and Prometheus firing alerts, then alertmanager sends notification into slack channel  (Do not forget to crate webhook URL for your slack channel)
 
 ![Slack-alerts on channel1](https://github.com/user-attachments/assets/8b754b44-5583-41ae-9aef-656a7e237cb5)
 
