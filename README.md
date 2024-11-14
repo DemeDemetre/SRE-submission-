@@ -151,7 +151,7 @@ check if prometheus can scrape metrics with promQL lenguage (see it in picture)
 ### 7. The seventh step
 Upgrade Helm for Prometheus 
 ```bash
-helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+helm upgrade --install --atomic --wait --timeout=120s prometheus prometheus-community/prometheus -n test -f values.yaml
 ```
 
 ### 8. The eighth step
