@@ -10,12 +10,15 @@ Start by adding the Prometheus Community Helm repository to your environment:
 # Add the Prometheus Helm repository
 helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
 helm repo update  # Update your Helm repository cache
+
 # install all three components (Prometheus , Grafana , Blackbox exporter)
 helm upgrade --install --atomic --wait --timeout=120s prometheus prometheus-community/prometheus -n test -f values.yaml
 helm install grafana grafana/grafana -n test
 helm install blackbox-exporter prometheus-community/prometheus-blackbox-exporter --namespace test
-'''
-# 2. Second Step
+
+
+
+#2. Second Step
 After installing all three components we need to add Prometheuse as a datasource in Grafana
 
- ![DataSource prometheus](https://github.com/user-attachments/assets/05987998-1d24-4eff-80b5-6d9c12af63ef)
+![DataSource prometheus](https://github.com/user-attachments/assets/05987998-1d24-4eff-80b5-6d9c12af63ef)
