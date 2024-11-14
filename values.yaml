@@ -1366,7 +1366,7 @@ alertmanager:
       - name: "slack-notifications"
         slack_configs:
           - send_resolved: true
-            api_url: "https://hooks.slack.com/services/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"
+            api_url: "https://hooks.slack.com/services/......." (webhook covered)
             channel: "#prometheus-testing"
             username: "Prometheus Alert"
             title: "{{ .CommonAnnotations.summary }}"
