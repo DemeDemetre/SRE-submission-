@@ -17,6 +17,8 @@ helm install grafana grafana/grafana -n test
 helm install blackbox-exporter prometheus-community/prometheus-blackbox-exporter --namespace test 
 ```
 
+![Deployed pods in KUbernetes](https://github.com/user-attachments/assets/6f840941-d25b-4d80-9021-1b9265138cfe)
+
 
 ### 2.Second Step
 After installing all three components we need to add Prometheuse as a datasource in Grafana
@@ -104,5 +106,42 @@ extraScrapeConfigs: |
       - target_label: __address__
         replacement: blackbox-exporter-prometheus-blackbox-exporter.test.svc.cluster.local:9115
 ```
+### 5. The fifth step
+Add alerting rules for alert manager in order to send notification to slack channel 
+```yaml
+#Alertmanager and Slack integration :
+
+alertmanager:
+  enabled: true
+  config:
+    global:
+      resolve_timeout: 5m
+
+    route:
+      group_by: ["alertname"]
+      group_wait: 30s
+      group_interval: 5m
+      repeat_interval: 3h
+      receiver: "slack-notifications"
+
+    receivers:
+      - name: "slack-notifications"
+        slack_configs:
+          - send_resolved: true
+            api_url: "https://hooks.slack.com/services/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"
+            channel: "#prometheus-testing"
+            username: "Prometheus Alert"
+            title: "{{ .CommonAnnotations.summary }}"
+            text: "{{ .CommonAnnotations.description }}"
+
+    inhibit_rules:
+      - source_match:
+          severity: "critical"
+        target_match:
+          severity: "warning"
+        equal: ["alertname", "job"]
+```
+![Alertmnager1](https://github.com/user-attachments/assets/44d6a84a-4bad-4729-8ab0-5871bcf2ec19)
+
 
 
