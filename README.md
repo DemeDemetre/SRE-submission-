@@ -20,4 +20,5 @@ helm install blackbox-exporter prometheus-community/prometheus-blackbox-exporter
 
 ### 2.Second Step
 After installing all three components we need to add Prometheuse as a datasource in Grafana
+![DataSource prometheus](https://github.com/user-attachments/assets/68ca9056-9025-4857-9bf3-43d4925eb1e5)
 
