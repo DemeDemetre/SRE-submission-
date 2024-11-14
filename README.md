@@ -159,6 +159,13 @@ check if slack channel is receiving notifications from alertmanager . we are sim
 
 ![Slack-alerts on channel1](https://github.com/user-attachments/assets/8b754b44-5583-41ae-9aef-656a7e237cb5)
 
+### 9.Thee ninth step
+Add deshboard to grafana based on metrics we want ( in this example (probe_dns_time_seconds)  job  nasa_api )
+we need to run query and then crate dashboard based on thet metrics 
+![metrics in grafana](https://github.com/user-attachments/assets/9220fb0e-604e-4ec3-894f-70137948b1d5)
+
+
+
 
 
 
