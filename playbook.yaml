@@ -21,7 +21,7 @@
         name: prometheus
         chart_ref: prometheus-community/prometheus
         release_namespace: test
-        values_file: ./prometheus-values.yml
+        values_file: ./values.yml
         state: present
         kubeconfig: ~/.kube/config
 
