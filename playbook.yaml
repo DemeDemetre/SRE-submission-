@@ -1,0 +1,38 @@
+---
+- name: Deploy Prometheus and Grafana on AKS
+  hosts: localhost
+  tasks:
+    - name: Ensure Kubernetes context is set to AKS cluster
+      shell: |
+        az aks get-credentials --resource-group {{ resource_group }} --name {{ aks_cluster_name }}
+      args:
+        warn: false
+
+    - name: Create test namespace if it does not exist
+      kubernetes.core.k8s:
+        state: present
+        name: test
+        api_version: v1
+        kind: Namespace
+
+    - name: Deploy Prometheus using Helm chart
+      community.kubernetes.helm:
+        name: prometheus
+        chart_ref: prometheus-community/prometheus
+        release_namespace: test
+        values_file: ./prometheus-values.yml
+        state: present
+        kubeconfig: ~/.kube/config
+
+    - name: Deploy Grafana using Helm chart
+      community.kubernetes.helm:
+        name: grafana
+        chart_ref: grafana/grafana
+        release_namespace: test
+        values_file: ./grafana-values.yml
+        state: present
+        kubeconfig: ~/.kube/config
+
+    - name: Display success message
+      debug:
+        msg: "Prometheus and Grafana (with Alertmanager) have been successfully deployed on the test namespace."
